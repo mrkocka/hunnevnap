@@ -36,7 +36,7 @@
 		}
 
 		element.textContent = formatter.format( now );
-		element.dateTime = now.toISOString();
+		element.dateTime = new Date().toISOString();
 	}
 
 	function updateClocks() {

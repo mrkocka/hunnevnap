@@ -2,14 +2,17 @@
 /**
  * Plugin Name:       HunNévnap
  * Plugin URI:        https://hunnevnap.hu
- * Description:       Magyar dátum, pontos idő és névnap Elementor widgetként.
+ * Description:       Displays Hungarian name days, the date, and a live clock in a customizable Elementor widget.
  * Version:           2.1.0
- * Author:            Celli Egyesület
+ * Author:            Mrkocka
+ * Author URI:        https://mrkocka.hu/
  * Text Domain:       hun-nevnap
+ * Domain Path:       /languages
  * Requires at least: 6.5
  * Requires PHP:      7.2
  * Requires Plugins:  elementor
  * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,17 +20,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'HUN_NEVNAP_VERSION', '2.1.0' );
+define( 'HUN_NEVNAP_MINIMUM_ELEMENTOR_VERSION', '3.5.0' );
 define( 'HUN_NEVNAP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'HUN_NEVNAP_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * Inicializálja az Elementor-integrációt.
+ * Initializes the Elementor integration.
  */
 function hun_nevnap_init() {
-	load_plugin_textdomain( 'hun-nevnap', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
 	if ( ! did_action( 'elementor/loaded' ) ) {
 		add_action( 'admin_notices', 'hun_nevnap_elementor_notice' );
+		return;
+	}
+
+	if ( ! defined( 'ELEMENTOR_VERSION' ) || version_compare( ELEMENTOR_VERSION, HUN_NEVNAP_MINIMUM_ELEMENTOR_VERSION, '<' ) ) {
+		add_action( 'admin_notices', 'hun_nevnap_elementor_version_notice' );
 		return;
 	}
 
@@ -37,7 +44,15 @@ function hun_nevnap_init() {
 add_action( 'plugins_loaded', 'hun_nevnap_init', 20 );
 
 /**
- * Regisztrálja a widget csak szükség esetén betöltődő fájljait.
+ * Loads the bundled translations.
+ */
+function hun_nevnap_load_textdomain() {
+	load_plugin_textdomain( 'hun-nevnap', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'hun_nevnap_load_textdomain' );
+
+/**
+ * Registers the widget assets.
  */
 function hun_nevnap_register_assets() {
 	wp_register_script(
@@ -57,9 +72,9 @@ function hun_nevnap_register_assets() {
 }
 
 /**
- * Regisztrálja a dátum és névnap widgetet.
+ * Registers the date and name-day widget.
  *
- * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgetkezelő.
+ * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgets manager.
  */
 function hun_nevnap_register_widget( $widgets_manager ) {
 	require_once HUN_NEVNAP_PATH . 'includes/class-hun-nevnap-widget.php';
@@ -67,7 +82,7 @@ function hun_nevnap_register_widget( $widgets_manager ) {
 }
 
 /**
- * Figyelmeztet, ha az Elementor nincs aktiválva.
+ * Warns administrators when Elementor is not active.
  */
 function hun_nevnap_elementor_notice() {
 	if ( ! current_user_can( 'activate_plugins' ) ) {
@@ -76,6 +91,20 @@ function hun_nevnap_elementor_notice() {
 
 	printf(
 		'<div class="notice notice-warning"><p>%s</p></div>',
-		esc_html__( 'A HunNévnap 2.0 használatához aktiválni kell az Elementor bővítményt.', 'hun-nevnap' )
+		esc_html__( 'HunNévnap requires the Elementor plugin to be installed and activated.', 'hun-nevnap' )
+	);
+}
+
+/**
+ * Warns administrators when the installed Elementor version is too old.
+ */
+function hun_nevnap_elementor_version_notice() {
+	if ( ! current_user_can( 'update_plugins' ) ) {
+		return;
+	}
+
+	printf(
+		'<div class="notice notice-warning"><p>%s</p></div>',
+		esc_html__( 'HunNévnap requires Elementor 3.5.0 or newer. Please update Elementor.', 'hun-nevnap' )
 	);
 }

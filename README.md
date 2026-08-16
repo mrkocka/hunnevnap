@@ -17,7 +17,11 @@ Magyar dátumot, folyamatosan frissülő pontos időt és az aktuális névnapok
 
 - WordPress 6.5 vagy újabb
 - PHP 7.2 vagy újabb
-- Elementor
+- Elementor 3.5.0 vagy újabb
+
+## Nyelvek
+
+A plugin forrásnyelve angol, és teljes magyar (`hu_HU`) fordítást tartalmaz. Magyar nyelvű WordPress-webhelyen a widget kezelőfelülete automatikusan magyarul jelenik meg.
 
 ## Telepítés
 
