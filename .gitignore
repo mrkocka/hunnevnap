@@ -1,5 +1,11 @@
-# Object file
-*.o
+.DS_Store
+**/.DS_Store
 
-# Ada Library Information
-*.ali
+*.zip
+/releases/
+/wordpress-org-adatok.txt
+
+.idea/
+.vscode/
+vendor/
+node_modules/

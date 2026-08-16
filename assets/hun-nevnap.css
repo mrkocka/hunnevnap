@@ -1,0 +1,11 @@
+.hun-nevnap-widget {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.4;
+}
+
+.hun-nevnap-date,
+.hun-nevnap-time,
+.hun-nevnap-names {
+	display: block;
+}
