@@ -44,14 +44,6 @@ function hun_nevnap_init() {
 add_action( 'plugins_loaded', 'hun_nevnap_init', 20 );
 
 /**
- * Loads the bundled translations.
- */
-function hun_nevnap_load_textdomain() {
-	load_plugin_textdomain( 'hun-nevnap', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-}
-add_action( 'init', 'hun_nevnap_load_textdomain' );
-
-/**
  * Registers the widget assets.
  */
 function hun_nevnap_register_assets() {
