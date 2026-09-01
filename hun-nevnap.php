@@ -7,7 +7,6 @@
  * Author:            Mrkocka
  * Author URI:        https://mrkocka.hu/
  * Text Domain:       hun-nevnap
- * Domain Path:       /languages
  * Requires at least: 6.5
  * Requires PHP:      7.2
  * Requires Plugins:  elementor
@@ -82,7 +81,7 @@ function hun_nevnap_elementor_notice() {
 	}
 
 	printf(
-		'<div class="notice notice-warning"><p>%s</p></div>',
+		'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
 		esc_html__( 'HunNévnap requires the Elementor plugin to be installed and activated.', 'hun-nevnap' )
 	);
 }
@@ -96,7 +95,7 @@ function hun_nevnap_elementor_version_notice() {
 	}
 
 	printf(
-		'<div class="notice notice-warning"><p>%s</p></div>',
+		'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
 		esc_html__( 'HunNévnap requires Elementor 3.5.0 or newer. Please update Elementor.', 'hun-nevnap' )
 	);
 }
